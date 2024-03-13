@@ -1,18 +1,39 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
+// import { MouseEvent } from "react";
 
-function ListGroup() {
-  let items = ["New York", "San Francisco", "Tokyo", "London", "Colombo"];
+interface ListGroupProps {
+    items: string[];
+    heading: string;
+}
+
+function ListGroup({items,heading}: ListGroupProps) {
+
+  // useState hook
+  // This is array distructring
+  /** constant variable "selectedIndex" initialized with the value -1, 
+  and a function "setSelectedIndex" that can be used to update the value of selectedIndex */ 
+  const [selectedIndex, setSelectedIndex] = useState(-1);
+
+  // Event Handler
+  // const handleClick = (event: MouseEvent) => console.log(event);
 
   return (
     <>
-      <h1>List</h1>
+      <h1>{heading}</h1>
       {items.length === 0 && <p>No item found</p>}
       <ul className="list-group">
         {items.map((item, index) => (
           <li
-            className="list-group-item"
+            className={
+              selectedIndex === index
+                ? "list-group-item active"
+                : "list-group-item"
+            }
             key={item}
-            onClick={() => console.log(item, index)}
+            // onClick={handleClick}
+            onClick={() => {
+              setSelectedIndex(index);
+            }}
           >
             {item}
           </li>
